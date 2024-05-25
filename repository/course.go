@@ -57,7 +57,13 @@ func (g *courseRepoImpl) Store(course *model.Course) error {
 }
 
 func (g *courseRepoImpl) Update(id int, course *model.Course) error {
-	err := g.db.Model(&model.Course{}).Where("id= ?", id).Updates(course).Error
+	// err := g.db.Model(&model.Course{}).Where("id= ?", id).Updates(course).Error
+	// if err != nil {
+	// 	return err
+	// }
+
+	err := g.db.Raw(`UPDATE public.courses SET name=$2, schedule=$3, attendance=$4 WHERE id =$1`, id, course.Name, course.Schedule, course.Attendance).Error
+
 	if err != nil {
 		return err
 	}

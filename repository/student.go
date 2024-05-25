@@ -32,7 +32,7 @@ func (s *studentRepoImpl) FetchAll() ([]model.Student, error) {
 	for rows.Next() {
 		var student model.Student
 
-		err := rows.Scan(&student.ID, &student.Name, &student.Address, &student.Class)
+		err := rows.Scan(&student.ID, &student.FullName, &student.Address, &student.Class)
 		if err != nil {
 			return nil, err
 		}

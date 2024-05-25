@@ -13,22 +13,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func SQLExecute(db *sql.DB) error {
-	//create table students
-	_, err := db.Exec("CREATE TABLE IF NOT EXISTS students (id SERIAL PRIMARY KEY, name VARCHAR(255), address VARCHAR(255), class VARCHAR(255))")
-	if err != nil {
-		return err
-	}
-
-	//create table courses
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS courses (id SERIAL PRIMARY KEY, name VARCHAR(255), schedule VARCHAR(255), attendance int)")
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func Reset(db *sql.DB, table string) error {
 	_, err := db.Exec("TRUNCATE " + table)
 	if err != nil {
@@ -57,13 +41,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// err = SQLExecute(dbConn)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// defer dbConn.Close()
 
 	dbConn.AutoMigrate(&model.Student{}, &model.Course{})
 
